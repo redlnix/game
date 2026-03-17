@@ -5,9 +5,15 @@
   position: absolute;
 }
 
-#block {
-  width: 100px;
-  height: 100px;
-  background: red;
-  position: absolute;
+#room {
+  width: 800px;
+  height: 600px;
+  position: relative;
+  background: grey;
+  border: 2px solid black;
+}
+
+.wall { 
+position: absolute;
+background: brown;
 }
