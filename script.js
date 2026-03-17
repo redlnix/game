@@ -55,9 +55,25 @@ function gameloop() {
   updateplayer()
 //  
 
-
+//check for collisions
+const walls = document.querySelectorAll(".wall")
+walls.forEach(wall => {
+  if (checkCollision(player1, wall)) {
+    player.x = oldX
+    player.y = oldY
+    updateplayer()
+  }
+})
+//
+//not letting player leave the general hub area
+const room = document.getElementById("hub")
+if (player.x < 0) player.x = 0
+if (player.y < 0) player.y = 0
+if (player.x > hub.offsetWidth - 30) player.x = room.offsetWidth - 30
+if (player.y > hub.offsetHeight - 30) player.y = room.offsetHeight - 30
 
   requestAnimationFrame(gameloop)
+//
 }
 
 gameloop()
