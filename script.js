@@ -1,8 +1,9 @@
-//sleep function
-const sleep = (ms) => Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => Promise(resolve => setTimeout(resolve, ms)); //sleep function
 const canvas = document.getElementById("gameCanvas")
 const ctx = canvas.getContext("2d")
-
+const player1 = document.getElementById("player")
+const oldX = player.x //saving old x and y in case of collisions
+const oldY = player.y
 
 const player = {
   x: 0,
@@ -17,13 +18,11 @@ const walls = [
   {x: 400, y: 50, width: 150, height: 20,}
 ]
 
-
-
-const player1 = document.getElementById("player")
-
 const keys = {}
 document.addEventListener("keydown", (e) => keys[e.key] = true) 
 document.addEventListener("keyup", (e) => keys[e.key] = false)
+//end of constants
+
 
 //new collision checker with canvas?
 function checkCollision(a, b) {
@@ -44,22 +43,31 @@ function updateplayer() {
 //GAMELOOP, IMPORTANT
 
 function gameloop() {
-//saving old coordinates to teleport back to if collision with wall is met
-  const oldX = player.x
-  const oldY = player.y
-//
-
 //movement system in the gameloop 
   if (keys["w"]) player.y -= player.speed
   if (keys["s"]) player.y += player.speed
   if (keys["a"]) player.x -= player.speed
   if (keys["d"]) player.x += player.speed
 //  console.log(keys) only turn on for debugging!
+
+//check for collisions  
+walls.forEach(wall => {
+  if (checkCollision(player, wall)) {
+    player.x = oldX
+    player.y = oldY
+  }
+})
+
 updateplayer()
-//  
+  
 
 requestAnimationFrame(gameloop)
 
 }
+//end of functions
+
+
+
+
 
 gameloop()
